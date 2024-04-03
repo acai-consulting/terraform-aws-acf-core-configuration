@@ -7,9 +7,9 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 4.0"
+      version = ">= 5.0"
       configuration_aliases = [
-        aws.ssm_ps_reader
+        aws.configuration_reader
       ]
     }
   }
@@ -21,13 +21,13 @@ terraform {
 data "aws_ssm_parameters_by_path" "configuration" {
   path      = var.parameter_name_prefix
   recursive = true
-  provider  = aws.ssm_ps_reader
+  provider  = aws.configuration_reader
 }
 
 data "aws_ssm_parameter" "configuration" {
   for_each = toset(data.aws_ssm_parameters_by_path.configuration.names)
   name     = each.value
-  provider = aws.ssm_ps_reader
+  provider = aws.configuration_reader
 }
 
 locals {

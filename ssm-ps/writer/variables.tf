@@ -1,9 +1,21 @@
 variable "configuration_add_on" {
   description = "Complex map of configuration add-on."
   type        = any
+  default     = {}
 }
 
-variable "parameters_overwrite" {
+variable "configuration_add_on_list" {
+  description = "List of complex maps for configuration add-ons."
+  type        = any
+  default     = []
+
+  validation {
+    condition     = can(length(var.configuration_add_on_list)) || can(var.configuration_add_on_list[0])
+    error_message = "The configuration_add_on_list must be a list."
+  }
+}
+
+variable "parameter_overwrite" {
   description = "Overwrite existing Parmeter Store entries."
   type        = bool
   default     = false
