@@ -34,7 +34,7 @@ jobs:
       AWS_TESTBED_DEFAULT_REGION: ${{ secrets.AWS_TESTBED_DEFAULT_REGION }}
 
   tfc_module_release:
-    uses: acai-consulting/github-terraform-workflows/.github/workflows/tfc-module-release.yml@add_output
+    uses: acai-consulting/github-terraform-workflows/.github/workflows/tf-module-release.yml@add_output
     if: ${{ github.event_name == 'push' }}
     with:
       semantic_release_config_repo: "acai-consulting/github-workflow-configs"
