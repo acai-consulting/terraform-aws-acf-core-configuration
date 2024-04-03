@@ -31,12 +31,12 @@ Later persistence via Amazon DynamoDB or Amazon S3 will be added.
 <!-- AUTHORS -->
 ## Authors
 
-This module is maintained by [ACAI GmbH][acai-url]
+This module is maintained by [ACAI GmbH][acai-url].
 
 <!-- LICENSE -->
 ## License
 
-See [LICENSE][license-url] for full details
+See [LICENSE][license-url] for full details.
 
 <!-- COPYRIGHT -->
 <br />
@@ -45,11 +45,13 @@ See [LICENSE][license-url] for full details
 <!-- MARKDOWN LINKS & IMAGES -->
 [acai-shield]: https://img.shields.io/badge/maintained_by-acai.gmbh-CB224B?style=flat
 [acai-url]: https://acai.gmbh
-[terraform-version-shield]: https://img.shields.io/badge/tf-%3E%3D1.3.0-blue.svg?style=flat&color=blueviolet
-[terraform-version-url]: https://www.terraform.io/upgrade-guides/0-15.html
+[terraform-version-shield]: https://img.shields.io/badge/tf-%3E%3D1.3.10-blue.svg?style=flat&color=blueviolet
+[terraform-version-url]: https://www.terraform.io/upgrade-guides/1-3-10.html
+[release-shield]: https://img.shields.io/github/v/release/acai-consulting/terraform-aws-acf-ou-mgmt?style=flat&color=success
 [architecture-png]: ./docs/terraform-aws-acf-core-configuration.png
 [license-url]: ./LICENSE
 [terraform-url]: https://www.terraform.io
+[aws-url]: https://aws.amazon.comterraform-aws-acf-ou-mgmt/tree/main/examples/complete
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

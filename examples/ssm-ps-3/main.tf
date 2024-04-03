@@ -31,12 +31,12 @@ terraform {
 # ¦ VERSIONS
 # ---------------------------------------------------------------------------------------------------------------------
 terraform {
-  required_version = ">= 1.0.0"
+  required_version = ">= 1.3.10"
 
   required_providers {
     aws = {
       source                = "hashicorp/aws"
-      version               = ">= 4.0"
+      version               = ">= 5.0"
       configuration_aliases = []
     }
   }
@@ -79,10 +79,28 @@ locals {
               }
             }
           }
-
         }
       }
     }
+  }
+  configuration_add_on1 = {
+    addon1_l1_e1_item = "value addon1_l1_e1_item"
+    addon1_l1_e2_item = "value addon1_l1_e3_item"
+    addon1_l1_e3_node = {
+      addon1_l1_e3_l2_e1_item = "value addon1_l1_e3_l2_e1_item"
+      addon1_l1_e3_l2_e2_node = {
+        addon1_l1_e3_l2_e2_l3_e1_item = "value addon1_l1_e3_l2_e2_l3_e1_item"
+        addon1_l1_e3_l2_e2_l3_e2_item = "value addon1_l1_e3_l2_e2_l3_e2_item"
+        addon1_l1_e3_l2_e2_l3_e3_node = {
+          addon1_l1_e3_l2_e2_l3_e3_l4_e1_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e1_item"
+          addon1_l1_e3_l2_e2_l3_e3_l4_e2_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e2_item"
+        }
+      }
+    }
+  }
+  configuration_add_on2 = {
+    addon2_l1_e1_item = "value addon2_l1_e1_item"
+    addon2_l1_e2_item = "value addon2_l1_e3_item"
   }
 
   parameter_name_prefix = "/test"
@@ -118,10 +136,15 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
-  configuration_add_on  = local.configuration_add_on
+  configuration_add_on = local.configuration_add_on
+  configuration_add_on_list = [
+    local.configuration_add_on1,
+    local.configuration_add_on2
+  ]
+  parameter_overwrite   = true
   parameter_name_prefix = local.parameter_name_prefix
   providers = {
-    aws.ssm_ps_writer = aws.core_configuration_writer
+    aws.configuration_writer = aws.core_configuration_writer
   }
   depends_on = [
     module.core_configuration_roles
@@ -144,10 +167,11 @@ module "core_configuration_reader" {
 
   parameter_name_prefix = local.parameter_name_prefix
   providers = {
-    aws.ssm_ps_reader = aws.core_configuration_reader
+    aws.configuration_reader = aws.core_configuration_reader
   }
   depends_on = [
     module.core_configuration_roles,
     module.core_configuration_writer
   ]
 }
+

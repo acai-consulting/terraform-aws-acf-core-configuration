@@ -6,14 +6,14 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExampleComplete(t *testing.T) {
+func TestExample3Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
 
 	// Create IAM Roles
 	terraformCoreConfigurationRoles := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps",
+		TerraformDir: "../examples/ssm-ps-3",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -23,23 +23,26 @@ func TestExampleComplete(t *testing.T) {
 	defer terraform.Destroy(t, terraformCoreConfigurationRoles)
 	terraform.InitAndApply(t, terraformCoreConfigurationRoles)
 
-	// Write Configuration
-	terraformWriteConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps",
+	// Write Configuration 1
+	terraformWriteConfiguration1 := &terraform.Options{
+		TerraformDir: "../examples/ssm-ps-3",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
 			"local.configuration_add_on",
+			"local.configuration_add_on1",
+			"local.configuration_add_on2",
 			"module.core_configuration_writer.module.complex_map_to_simple_map",
+			"module.core_configuration_writer.local.flattened_configuration_add_on",
 			"module.core_configuration_writer",
 		},
 	}
-	defer terraform.Destroy(t, terraformWriteConfiguration)
-	terraform.InitAndApply(t, terraformWriteConfiguration)
-
+	defer terraform.Destroy(t, terraformWriteConfiguration1)
+	terraform.InitAndApply(t, terraformWriteConfiguration1)
+		
 	// Read Configuration
 	terraformReadConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps",
+		TerraformDir: "../examples/ssm-ps-3",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
