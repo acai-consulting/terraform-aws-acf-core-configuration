@@ -10,16 +10,16 @@ on:
 
 jobs:
   tf_module_base_job:
-    uses: acai-consulting/github-terraform-workflows/.github/workflows/tf-module-base.yml@add_output
+    uses: acai-consulting/github-terraform-workflows/.github/workflows/tf-module-base.yml@main
     if: ${{ github.event_name == 'pull_request' }}
     with:
       tflint_config_repo: "acai-consulting/github-workflow-configs"
       tflint_config_repo_ref: "main"
       tflint_config_path: ".tflint.hcl"
-
+      
   tf_module_test_job:
     needs: tf_module_base_job
-    uses: acai-consulting/github-terraform-workflows/.github/workflows/tfc-module-test.yml@add_output
+    uses: acai-consulting/github-terraform-workflows/.github/workflows/tfc-module-test.yml@main
     if: ${{ 
       needs.tf_module_base_job.outputs.all_steps_passed == 'true' &&
       github.event_name == 'pull_request' }}
@@ -34,7 +34,7 @@ jobs:
       AWS_TESTBED_DEFAULT_REGION: ${{ secrets.AWS_TESTBED_DEFAULT_REGION }}
 
   tfc_module_release:
-    uses: acai-consulting/github-terraform-workflows/.github/workflows/tf-module-release.yml@add_output
+    uses: acai-consulting/github-terraform-workflows/.github/workflows/tf-module-release.yml@main
     if: ${{ github.event_name == 'push' }}
     with:
       semantic_release_config_repo: "acai-consulting/github-workflow-configs"
