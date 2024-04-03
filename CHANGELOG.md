@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.1.0...1.2.0) (2024-04-03)
+
+
+### Features
+
+* Add Support for Add-On Lists ([#3](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/issues/3)) ([46805e1](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/commit/46805e1a550126c9f27fce05788c7ab5e1e6d16c))
+
 ## [1.1.0](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.0.0...1.1.0) (2024-04-03)
 
 
