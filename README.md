@@ -50,3 +50,29 @@ See [LICENSE][license-url] for full details
 [architecture-png]: ./docs/terraform-aws-acf-core-configuration.png
 [license-url]: ./LICENSE
 [terraform-url]: https://www.terraform.io
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+No providers.
+
+## Modules
+
+No modules.
+
+## Resources
+
+No resources.
+
+## Inputs
+
+No inputs.
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
