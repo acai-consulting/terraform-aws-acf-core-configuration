@@ -1,4 +1,4 @@
-module github.com/acai-consulting/REPLACE_ME/test
+module github.com/acai-consulting/terraform-aws-acf-core-state/test
 
 go 1.18
 

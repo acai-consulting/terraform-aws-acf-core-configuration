@@ -1,0 +1,128 @@
+configuration_add_on = {
+  "l1_e1_item" = "value l1_e1_item"
+  "l1_e2_item" = "value l1_e3_item"
+  "l1_e3_node" = {
+    "l1_e3_l2_e1_item" = "value l1_e3_l2_e1_item"
+    "l1_e3_l2_e2_node" = {
+      "l1_e3_l2_e2_l3_e1_item" = "value l1_e3_l2_e2_l3_e1_item"
+      "l1_e3_l2_e2_l3_e2_item" = "value l1_e3_l2_e2_l3_e2_item"
+      "l1_e3_l2_e2_l3_e3_node" = {
+        "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+        "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+        "l1_e3_l2_e2_l3_e3_node" = {
+          "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+          "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+          "l1_e3_l2_e2_l3_e3_node" = {
+            "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+            "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+            "l1_e3_l2_e2_l3_e3_node" = {
+              "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+              "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              "l1_e3_l2_e2_l3_e3_node" = {
+                "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+                "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+flattened_configuration_add_on = {
+  "/test/l1_e1_item" = "value l1_e1_item"
+  "/test/l1_e2_item" = "value l1_e3_item"
+  "/test/l1_e3_node/l1_e3_l2_e1_item" = "value l1_e3_l2_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e1_item" = "value l1_e3_l2_e2_l3_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e2_item" = "value l1_e3_l2_e2_l3_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+}
+flattened_configuration_add_on2 = {
+  "/test/l1_e1_item" = "value l1_e1_item"
+  "/test/l1_e2_item" = "value l1_e3_item"
+  "/test/l1_e3_node/l1_e3_l2_e1_item" = "value l1_e3_l2_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e1_item" = "value l1_e3_l2_e2_l3_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e2_item" = "value l1_e3_l2_e2_l3_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+  "/test/l1_e3_node/l1_e3_l2_e2_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_node/l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+}
+similar = true
+unflattened_configuration_add_on = {
+  "l1_e1_item" = "value l1_e1_item"
+  "l1_e2_item" = "value l1_e3_item"
+  "l1_e3_node" = {
+    "l1_e3_l2_e1_item" = "value l1_e3_l2_e1_item"
+    "l1_e3_l2_e2_node" = {
+      "l1_e3_l2_e2_l3_e1_item" = "value l1_e3_l2_e2_l3_e1_item"
+      "l1_e3_l2_e2_l3_e2_item" = "value l1_e3_l2_e2_l3_e2_item"
+      "l1_e3_l2_e2_l3_e3_node" = {
+        "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+        "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+        "l1_e3_l2_e2_l3_e3_node" = {
+          "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+          "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+          "l1_e3_l2_e2_l3_e3_node" = {
+            "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+            "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+            "l1_e3_l2_e2_l3_e3_node" = {
+              "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+              "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              "l1_e3_l2_e2_l3_e3_node" = {
+                "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+                "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+unflattened_configuration_add_on2 = {
+  "l1_e1_item" = "value l1_e1_item"
+  "l1_e2_item" = "value l1_e3_item"
+  "l1_e3_node" = {
+    "l1_e3_l2_e1_item" = "value l1_e3_l2_e1_item"
+    "l1_e3_l2_e2_node" = {
+      "l1_e3_l2_e2_l3_e1_item" = "value l1_e3_l2_e2_l3_e1_item"
+      "l1_e3_l2_e2_l3_e2_item" = "value l1_e3_l2_e2_l3_e2_item"
+      "l1_e3_l2_e2_l3_e3_node" = {
+        "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+        "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+        "l1_e3_l2_e2_l3_e3_node" = {
+          "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+          "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+          "l1_e3_l2_e2_l3_e3_node" = {
+            "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+            "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+            "l1_e3_l2_e2_l3_e3_node" = {
+              "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+              "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              "l1_e3_l2_e2_l3_e3_node" = {
+                "l1_e3_l2_e2_l3_e3_l4_e1_item" = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
+                "l1_e3_l2_e2_l3_e3_l4_e2_item" = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
