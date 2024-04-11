@@ -185,20 +185,20 @@ resource "aws_ssm_parameter" "reader_role_arn" {
   # in case of encryption: 
   # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
   # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
-  value = aws_iam_role.configuration_reader.arn
-  key_id     = var.kms_key_arn
-  tags  = local.resource_tags
+  value  = aws_iam_role.configuration_reader.arn
+  key_id = var.kms_key_arn
+  tags   = local.resource_tags
 }
 
 resource "aws_ssm_parameter" "writer_role_arn" {
   count = var.iam_roles.store_role_arns == true ? 1 : 0
 
-  name  = "${var.parameter_name_prefix}/governance/core_configuration/writer_role_arn"
+  name = "${var.parameter_name_prefix}/governance/core_configuration/writer_role_arn"
   type = var.kms_key_arn == null ? "String" : "SecureString"
   # in case of encryption: 
   # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
   # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
-  value = aws_iam_role.configuration_writer.arn
-  key_id     = var.kms_key_arn
-  tags  = local.resource_tags
+  value  = aws_iam_role.configuration_writer.arn
+  key_id = var.kms_key_arn
+  tags   = local.resource_tags
 }
