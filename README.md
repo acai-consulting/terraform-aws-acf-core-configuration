@@ -7,7 +7,11 @@
 
 <!-- SHIELDS -->
 [![Maintained by acai.gmbh][acai-shield]][acai-url]
-[![Terraform Version][terraform-version-shield]][terraform-version-url]
+![module-version-shield]
+![terraform-version-shield]
+![trivy-shield]
+![checkov-shield]
+[![Latest Release][release-shield]][release-url]
 
 <!-- DESCRIPTION -->
 This [Terraform][terraform-url] module allows you to share Configuration Items (Terraform HCL map) over multiple Terraform pipelines.
@@ -45,13 +49,14 @@ See [LICENSE][license-url] for full details.
 <!-- MARKDOWN LINKS & IMAGES -->
 [acai-shield]: https://img.shields.io/badge/maintained_by-acai.gmbh-CB224B?style=flat
 [acai-url]: https://acai.gmbh
+[module-version-shield]: https://img.shields.io/badge/module_version-1.1.4-CB224B?style=flat
 [terraform-version-shield]: https://img.shields.io/badge/tf-%3E%3D1.3.10-blue.svg?style=flat&color=blueviolet
-[terraform-version-url]: https://www.terraform.io/upgrade-guides/1-3-10.html
-[release-shield]: https://img.shields.io/github/v/release/acai-consulting/terraform-aws-acf-ou-mgmt?style=flat&color=success
+[trivy-shield]: https://img.shields.io/badge/trivy-passed-green
+[checkov-shield]: https://img.shields.io/badge/checkov-passed-green
+[release-shield]: https://img.shields.io/github/v/release/acai-consulting/terraform-aws-acf-core-configuration?style=flat&color=success
 [architecture-png]: ./docs/terraform-aws-acf-core-configuration.png
-[license-url]: ./LICENSE
+[license-url]: ./LICENSE.md
 [terraform-url]: https://www.terraform.io
-[aws-url]: https://aws.amazon.comterraform-aws-acf-ou-mgmt/tree/main/examples/complete
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
