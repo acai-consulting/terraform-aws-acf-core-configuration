@@ -105,7 +105,9 @@ data "aws_iam_policy_document" "configuration_reader" {
       "ssm:GetParametersByPath",
       "ssm:DescribeParameters"
     ]
-    resources = ["*"]
+    resources = [
+      replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}/*", "////", "/"),
+    ]
   }
   dynamic "statement" {
     for_each = var.kms_key_arn != null ? ["enabled"] : []
