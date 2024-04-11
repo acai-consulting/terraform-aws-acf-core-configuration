@@ -151,7 +151,6 @@ data "aws_iam_policy_document" "configuration_writer" {
       "ssm:GetParameters",
       "ssm:DeleteParameter",
       "ssm:DeleteParameters",
-      "ssm:DescribeParameters",
       "ssm:PutParameter",
       "ssm:AddTagsToResource",
       "ssm:RemoveTagsFromResource",
@@ -161,7 +160,16 @@ data "aws_iam_policy_document" "configuration_writer" {
       replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}/*", "////", "/"),
     ]
   }
-
+  statement {
+    sid    = "AllowSSMForListContext2"
+    effect = "Allow"
+    actions = [
+      "ssm:DescribeParameters"
+    ]
+    resources = [
+      "arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:*"
+    ]
+  }
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
