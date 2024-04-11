@@ -27,6 +27,17 @@ variable "parameter_name_prefix" {
   default     = "/foundation"
 }
 
+variable "kms_key_arn" {
+  description = "KMS Key to be used to encrypt the SSM Parameter Store entries."
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.kms_key_arn == null ? true : can(regex("^arn:aws:kms", var.kms_key_arn))
+    error_message = "Value must contain ARN, starting with \"arn:aws:kms\"."
+  }
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ COMMON
 # ---------------------------------------------------------------------------------------------------------------------
