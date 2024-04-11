@@ -24,6 +24,15 @@ data "aws_organizations_organization" "this_org" {}
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   org_id = data.aws_organizations_organization.this_org.id
+  resource_tags = merge(
+    var.resource_tags,
+    {
+      "module_provider" = "ACAI GmbH",
+      "module_name"     = "terraform-aws-acf-core-configuration",
+      "module_source"   = "github.com/acai-consulting/terraform-aws-acf-core-configuration",
+      "module_version"  = /*inject_version_start*/ "1.2.1" /*inject_version_end*/
+    }
+  )
 }
 
 
@@ -63,6 +72,7 @@ resource "aws_iam_role" "configuration_reader" {
   assume_role_policy   = data.aws_iam_policy_document.trust_policy.json
   path                 = var.iam_roles.role_path
   permissions_boundary = var.iam_roles.permissions_boundary_arn
+  tags                 = local.resource_tags
 }
 
 resource "aws_iam_role_policy" "configuration_reader" {
@@ -120,6 +130,7 @@ resource "aws_iam_role" "configuration_writer" {
   assume_role_policy   = data.aws_iam_policy_document.trust_policy.json
   path                 = var.iam_roles.role_path
   permissions_boundary = var.iam_roles.permissions_boundary_arn
+  tags                 = local.resource_tags
 }
 
 resource "aws_iam_role_policy" "configuration_writer" {
@@ -167,17 +178,25 @@ data "aws_iam_policy_document" "configuration_writer" {
 resource "aws_ssm_parameter" "reader_role_arn" {
   count = var.iam_roles.store_role_arns == true ? 1 : 0
 
-  name  = "${var.parameter_name_prefix}/core_configuration/reader_role_arn"
-  type  = "String"
+  name = "${var.parameter_name_prefix}/governance/core_configuration/reader_role_arn"
+  type = var.kms_key_arn == null ? "String" : "SecureString"
+  # in case of encryption: 
+  # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
+  # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
   value = aws_iam_role.configuration_reader.arn
-  tags  = var.resource_tags
+  key_id     = var.kms_key_arn
+  tags  = local.resource_tags
 }
 
 resource "aws_ssm_parameter" "writer_role_arn" {
   count = var.iam_roles.store_role_arns == true ? 1 : 0
 
-  name  = "${var.parameter_name_prefix}/core_configuration/writer_role_arn"
-  type  = "String"
+  name  = "${var.parameter_name_prefix}/governance/core_configuration/writer_role_arn"
+  type = var.kms_key_arn == null ? "String" : "SecureString"
+  # in case of encryption: 
+  # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
+  # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
   value = aws_iam_role.configuration_writer.arn
-  tags  = var.resource_tags
+  key_id     = var.kms_key_arn
+  tags  = local.resource_tags
 }

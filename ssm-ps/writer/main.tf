@@ -18,6 +18,22 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ LOCALS
 # ---------------------------------------------------------------------------------------------------------------------
+locals {
+  resource_tags = merge(
+    var.resource_tags,
+    {
+      "module_provider" = "ACAI GmbH",
+      "module_name"     = "terraform-aws-acf-core-configuration",
+      "module_source"   = "github.com/acai-consulting/terraform-aws-acf-core-configuration",
+      "module_version"  = /*inject_version_start*/ "1.2.1" /*inject_version_end*/
+    }
+  )
+}
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ DATA TRANSFORMATION
+# ---------------------------------------------------------------------------------------------------------------------
 module "complex_map_to_simple_map" {
   source = "../../shared/complex_map_to_simple_map"
 
@@ -48,14 +64,14 @@ locals {
 resource "aws_ssm_parameter" "ssm_parameters_ignore" {
   for_each = var.parameter_overwrite ? {} : local.flattened_configuration_add_on
 
-  name     = each.key
-  type       = var.kms_key_arn == null ? "String" : "SecureString"
+  name = each.key
+  type = var.kms_key_arn == null ? "String" : "SecureString"
   # in case of encryption: 
   # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
   # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
   value    = each.value
-  tags     = var.resource_tags
-  key_id     = var.kms_key_arn
+  tags     = local.resource_tags
+  key_id   = var.kms_key_arn
   provider = aws.configuration_writer
 
   lifecycle {
@@ -68,13 +84,13 @@ resource "aws_ssm_parameter" "ssm_parameters_ignore" {
 resource "aws_ssm_parameter" "ssm_parameters_overwrite" {
   for_each = var.parameter_overwrite ? local.flattened_configuration_add_on : {}
 
-  name       = each.key
-  type       = var.kms_key_arn == null ? "String" : "SecureString"
+  name = each.key
+  type = var.kms_key_arn == null ? "String" : "SecureString"
   # in case of encryption: 
   # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
   # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
   value      = each.value
-  tags       = var.resource_tags
+  tags       = local.resource_tags
   key_id     = var.kms_key_arn
   overwrite  = true # currently seems to default to false. Will be removed after terraform aws 6.x
   provider   = aws.configuration_writer
