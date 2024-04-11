@@ -92,7 +92,7 @@ data "aws_iam_policy_document" "configuration_reader" {
       "ssm:GetParameterHistory",
       "ssm:GetParameters",
       "ssm:GetParameter",
-      "ssm:GetParametersByPath"
+      "ssm:DescribeParameters"
     ]
     resources = [
       replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}/*", "////", "/"),
@@ -102,11 +102,10 @@ data "aws_iam_policy_document" "configuration_reader" {
     sid    = "AllowSSMForListContext2"
     effect = "Allow"
     actions = [
-      "ssm:GetParametersByPath",
-      "ssm:DescribeParameters"
+      "ssm:GetParametersByPath"
     ]
     resources = [
-      replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}/*", "////", "/"),
+      replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}", "////", "/")
     ]
   }
   dynamic "statement" {
@@ -162,16 +161,7 @@ data "aws_iam_policy_document" "configuration_writer" {
       replace("arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:parameter/${var.parameter_name_prefix}/*", "////", "/"),
     ]
   }
-  statement {
-    sid    = "AllowSSMForListContext2"
-    effect = "Allow"
-    actions = [
-      "ssm:DescribeParameters"
-    ]
-    resources = [
-      "arn:aws:ssm:*:${data.aws_caller_identity.this_account.account_id}:*"
-    ]
-  }
+
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
