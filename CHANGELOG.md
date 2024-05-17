@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.3](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.2.2...1.2.3) (2024-05-17)
+
+
+### Bug Fixes
+
+* updated license  ([#6](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/issues/6)) ([04ee512](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/commit/04ee512b822a33075e7e130b35b29a2d73a6b0ba))
+
 ## [1.2.2](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.2.1...1.2.2) (2024-04-11)
 
 
