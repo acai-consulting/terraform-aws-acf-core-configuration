@@ -54,9 +54,11 @@ See [LICENSE][license-url] for full details.
 [trivy-shield]: https://img.shields.io/badge/trivy-passed-green
 [checkov-shield]: https://img.shields.io/badge/checkov-passed-green
 [release-shield]: https://img.shields.io/github/v/release/acai-consulting/terraform-aws-acf-core-configuration?style=flat&color=success
+[release-url]: https://github.com/acai-consulting/terraform-aws-acf-core-configuration/releases
 [architecture-png]: ./docs/terraform-aws-acf-core-configuration.png
 [license-url]: ./LICENSE.md
 [terraform-url]: https://www.terraform.io
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
