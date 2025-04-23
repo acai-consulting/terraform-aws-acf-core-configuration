@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.2.3...1.3.0) (2025-04-23)
+
+
+### Features
+
+* processing of lists added ([#7](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/issues/7)) ([0aa04e9](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/commit/0aa04e9aa9392b6f0a442e2df8834ee8a060c8f5))
+
 ## [1.2.3](https://github.com/acai-consulting/terraform-aws-acf-core-configuration/compare/1.2.2...1.2.3) (2024-05-17)
 
 
