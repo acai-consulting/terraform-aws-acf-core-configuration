@@ -6,7 +6,7 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample3Complete(t *testing.T) {
+func TestExample4Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
