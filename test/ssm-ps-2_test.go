@@ -30,7 +30,6 @@ func TestExample2Complete(t *testing.T) {
 		Lock:         true,
 		Targets: 	  []string {
 			"module.core_configuration_writer.module.complex_map_to_simple_map",
-			"module.core_configuration_writer.local.flattened_configuration_add_on",
 			"module.core_configuration_writer",
 		},
 	}
