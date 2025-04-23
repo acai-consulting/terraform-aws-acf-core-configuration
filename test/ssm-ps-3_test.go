@@ -29,11 +29,7 @@ func TestExample3Complete(t *testing.T) {
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
-			"local.configuration_add_on",
-			"local.configuration_add_on1",
-			"local.configuration_add_on2",
 			"module.core_configuration_writer.module.complex_map_to_simple_map",
-			"module.core_configuration_writer.local.flattened_configuration_add_on",
 			"module.core_configuration_writer",
 		},
 	}

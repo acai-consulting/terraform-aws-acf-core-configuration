@@ -3,33 +3,48 @@ import sys
 
 def unflatten_map(flattened_map, separator='/', prefix=None):
     """
-    Convert a flattened dictionary with concatenated keys into a nested dictionary.
-
-    :param flattened_dict: Flattened dictionary with paths as keys.
-    :param separator: Separator used in the flattened keys.
-    :return: Nested dictionary.
+    Convert a flattened dictionary with path-style keys into a nested dictionary with support for lists.
     """
-    nested_dict = {}
-    for key, value in flattened_map.items():
-        # Check if the key starts with the prefix (if provided) and adjust accordingly
-        if prefix and key.startswith(prefix):
-            # Adjust the key by removing the prefix and the following separator (if present)
-            adjusted_key = key[len(prefix):].lstrip(separator)
-        elif prefix:
-            # Skip keys that do not start with the prefix
-            continue
+    def assign(d, keys, value):
+        key = keys[0]
+        is_index = key.isdigit()
+
+        if len(keys) == 1:
+            if is_index:
+                while len(d) <= int(key):
+                    d.append(None)
+                d[int(key)] = value
+            else:
+                d[key] = value
+            return
+
+        next_key = keys[1]
+        is_next_index = next_key.isdigit()
+
+        if is_index:
+            while len(d) <= int(key):
+                d.append([] if is_next_index else {})
+            if d[int(key)] is None:
+                d[int(key)] = [] if is_next_index else {}
+            assign(d[int(key)], keys[1:], value)
         else:
-            adjusted_key = key
+            if key not in d:
+                d[key] = [] if is_next_index else {}
+            assign(d[key], keys[1:], value)
 
-        parts = adjusted_key.split(separator)
-        d = nested_dict
-        for part in parts[:-1]:
-            if part not in d:
-                d[part] = {}
-            d = d[part]
-        d[parts[-1]] = value
-    return nested_dict
+    nested = {}
+    for key, value in flattened_map.items():
+        if prefix and key.startswith(prefix):
+            key = key[len(prefix):].lstrip(separator)
+        elif prefix:
+            continue
 
+        parts = key.split(separator)
+        if parts[0].isdigit():
+            if not isinstance(nested, list):
+                nested = []
+        assign(nested, parts, value)
+    return nested
 
 input_text = str(sys.argv[1])
 prefix = sys.argv[2] if len(sys.argv) > 2 else ''

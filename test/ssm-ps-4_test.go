@@ -6,14 +6,14 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample2Complete(t *testing.T) {
+func TestExample4Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
 
 	// Create IAM Roles
 	terraformCoreConfigurationRoles := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-2",
+		TerraformDir: "../examples/ssm-ps-4",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -25,7 +25,7 @@ func TestExample2Complete(t *testing.T) {
 
 	// Write Configuration 1
 	terraformWriteConfiguration1 := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-2",
+		TerraformDir: "../examples/ssm-ps-4",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -38,7 +38,7 @@ func TestExample2Complete(t *testing.T) {
 		
 	// Read Configuration
 	terraformReadConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-2",
+		TerraformDir: "../examples/ssm-ps-4",
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
