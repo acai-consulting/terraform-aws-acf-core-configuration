@@ -53,17 +53,50 @@ data "aws_caller_identity" "current" {}
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   configuration_add_on = {
-    simple_string = "test_value"
-    string_list = [
-      "item1",
-      "item2",
-      "item3"
-    ]
-    nested_object = {
-      name = "test_nested"
-      tags = [
-        "tag1",
-        "tag2"
+    database = {
+      connections = [
+        {
+          name = "primary"
+          host = "db1.example.com"
+          port = "5432"
+          settings = {
+            max_connections = "100"
+            timeout         = "30"
+          }
+          tags = ["production", "primary"]
+        },
+        {
+          name = "secondary"
+          host = "db2.example.com"
+          port = "5432"
+          settings = {
+            max_connections = "50"
+            timeout         = "15"
+            backup_enabled  = "true"
+          }
+          tags = ["production", "backup"]
+        }
+      ]
+    }
+    application = {
+      services = ["api", "worker", "scheduler"]
+      environments = [
+        {
+          name     = "prod"
+          replicas = "3"
+          resources = {
+            cpu    = "2"
+            memory = "4Gi"
+          }
+        },
+        {
+          name     = "staging"
+          replicas = "1"
+          resources = {
+            cpu    = "1"
+            memory = "2Gi"
+          }
+        }
       ]
     }
   }

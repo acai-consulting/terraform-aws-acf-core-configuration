@@ -4,12 +4,12 @@ configuration_add_on = {
     {
       name    = "dict1"
       value   = "value1"
-      enabled = true
+      enabled = "true"
     },
     {
       name    = "dict2"
       value   = "value2"
-      enabled = false
+      enabled = "false"
       nested = {
         sub_key = "sub_value"
       }
@@ -25,8 +25,8 @@ configuration_add_on = {
         id   = "item2"
         tags = ["development"]
         config = {
-          timeout = 30
-          retry   = true
+          timeout = "30"
+          retry   = "true"
         }
       }
     ]
