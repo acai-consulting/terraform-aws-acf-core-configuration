@@ -2,18 +2,20 @@ package test
 
 import (
 	"testing"
-	"github.com/stretchr/testify/assert"
+
 	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestExample4Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
+	terraformDir := "../examples/ssm-ps-4"
 
 	// Create IAM Roles
 	terraformCoreConfigurationRoles := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-4",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -25,12 +27,13 @@ func TestExample4Complete(t *testing.T) {
 
 	// Write Configuration 1
 	terraformWriteConfiguration1 := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-4",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
 			"module.core_configuration_writer.module.complex_map_to_simple_map",
 			"module.core_configuration_writer",
+			"module.core_configuration_reader",
 		},
 	}
 	defer terraform.Destroy(t, terraformWriteConfiguration1)
@@ -38,7 +41,7 @@ func TestExample4Complete(t *testing.T) {
 		
 	// Read Configuration
 	terraformReadConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-4",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {

@@ -10,9 +10,11 @@ func TestExample7ListDict(t *testing.T) {
     // retryable errors in terraform testing.
     t.Log("Starting List of Dictionaries Module test")
 
+    terraformDir := "../examples/ssm-ps-7"
+
     // Create IAM Roles
     terraformCoreConfigurationRoles := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-7",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {
@@ -24,7 +26,7 @@ func TestExample7ListDict(t *testing.T) {
 
     // Write Configuration
     terraformWriteConfiguration := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-7",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {
@@ -37,7 +39,7 @@ func TestExample7ListDict(t *testing.T) {
         
     // Read Configuration
     terraformReadConfiguration := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-7",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {

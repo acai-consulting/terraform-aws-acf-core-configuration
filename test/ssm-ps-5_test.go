@@ -10,9 +10,11 @@ func TestExample5ComplexMixed(t *testing.T) {
     // retryable errors in terraform testing.
     t.Log("Starting Complex Mixed Structure Module test")
 
+    terraformDir := "../examples/ssm-ps-5"
+
     // Create IAM Roles
     terraformCoreConfigurationRoles := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-5",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {
@@ -24,12 +26,13 @@ func TestExample5ComplexMixed(t *testing.T) {
 
     // Write Configuration
     terraformWriteConfiguration := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-5",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {
             "module.core_configuration_writer.module.complex_map_to_simple_map",
             "module.core_configuration_writer",
+			"module.core_configuration_reader",
         },
     }
     defer terraform.Destroy(t, terraformWriteConfiguration)
@@ -37,7 +40,7 @@ func TestExample5ComplexMixed(t *testing.T) {
         
     // Read Configuration
     terraformReadConfiguration := &terraform.Options{
-        TerraformDir: "../examples/ssm-ps-5",
+        TerraformDir: terraformDir,
         NoColor:      false,
         Lock:         true,
         Targets: 	  []string {
