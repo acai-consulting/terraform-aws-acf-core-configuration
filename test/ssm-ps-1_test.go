@@ -6,11 +6,11 @@ import (
     "github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample5ComplexMixed(t *testing.T) {
+func TestExample1Complete(t *testing.T) {
     // retryable errors in terraform testing.
-    t.Log("Starting Complex Mixed Structure Module test")
+    t.Log("Starting Sample Module test")
 
-    terraformDir := "../examples/ssm-ps-5"
+    terraformDir := "../examples/ssm-ps-1"
 
     terraformCore := &terraform.Options{
         TerraformDir: terraformDir,
@@ -44,7 +44,7 @@ func TestExample5ComplexMixed(t *testing.T) {
         },
     }
     terraform.InitAndApply(t, terraformWriteConfiguration)
-        
+
     // Read Configuration
     terraformReadConfiguration := &terraform.Options{
         TerraformDir: terraformDir,
@@ -58,13 +58,7 @@ func TestExample5ComplexMixed(t *testing.T) {
     
     // Retrieve the 'test_success' output
     testSuccessOutput := terraform.Output(t, terraformReadConfiguration, "test_success")
-    
-    // Retrieve the 'complex_structure_test' output
-    complexStructureOutput := terraform.Output(t, terraformReadConfiguration, "complex_structure_test")
 
     // Assert that 'test_success' equals "true"
     assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
-    
-    // Assert that complex structure test passes
-    assert.Equal(t, "true", complexStructureOutput, "The complex_structure_test output is not true")
 }

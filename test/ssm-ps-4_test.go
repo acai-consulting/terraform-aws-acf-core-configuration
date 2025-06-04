@@ -13,6 +13,16 @@ func TestExample4Complete(t *testing.T) {
 
 	terraformDir := "../examples/ssm-ps-4"
 
+	terraformCore := &terraform.Options{
+		TerraformDir: terraformDir,
+		NoColor:      false,
+		Lock:         true,
+	}
+	defer func() {
+		terraform.Destroy(t, terraformCore)
+		terraform.Show(t, terraformCore)
+	}()
+
 	// Create IAM Roles
 	terraformCoreConfigurationRoles := &terraform.Options{
 		TerraformDir: terraformDir,
@@ -22,7 +32,6 @@ func TestExample4Complete(t *testing.T) {
 			"module.core_configuration_roles", 
 		},
 	}
-	defer terraform.Destroy(t, terraformCoreConfigurationRoles)
 	terraform.InitAndApply(t, terraformCoreConfigurationRoles)
 
 	// Write Configuration 1
@@ -33,10 +42,8 @@ func TestExample4Complete(t *testing.T) {
 		Targets: 	  []string {
 			"module.core_configuration_writer.module.complex_map_to_simple_map",
 			"module.core_configuration_writer",
-			"module.core_configuration_reader",
 		},
 	}
-	defer terraform.Destroy(t, terraformWriteConfiguration1)
 	terraform.InitAndApply(t, terraformWriteConfiguration1)
 		
 	// Read Configuration
@@ -48,7 +55,6 @@ func TestExample4Complete(t *testing.T) {
 			"module.core_configuration_reader",
 		},
 	}
-	defer terraform.Destroy(t, terraformReadConfiguration)
 	terraform.InitAndApply(t, terraformReadConfiguration)
 	
 	

@@ -1,25 +1,25 @@
 package test
 
 import (
-    "os"
-    "path/filepath"	
 	"testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample1Complete(t *testing.T) {
+func TestExample2Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
-    terraformDir := "../examples/ssm-ps-1"
+	terraformDir := "../examples/ssm-ps-2"
 
-    // Clean up backend override file after test
+    terraformCore := &terraform.Options{
+        TerraformDir: terraformDir,
+        NoColor:      false,
+        Lock:         true,
+    }
     defer func() {
-        // Also clean up local state files
-        os.Remove(filepath.Join(terraformDir, "terraform.tfstate"))
-        os.Remove(filepath.Join(terraformDir, "terraform.tfstate.backup"))
-        os.RemoveAll(filepath.Join(terraformDir, ".terraform"))
+        terraform.Destroy(t, terraformCore)
+        terraform.Show(t, terraformCore)
     }()
 
 	// Create IAM Roles
@@ -31,11 +31,10 @@ func TestExample1Complete(t *testing.T) {
 			"module.core_configuration_roles", 
 		},
 	}
-	defer terraform.Destroy(t, terraformCoreConfigurationRoles)
 	terraform.InitAndApply(t, terraformCoreConfigurationRoles)
 
-	// Write Configuration
-	terraformWriteConfiguration := &terraform.Options{
+	// Write Configuration 1
+	terraformWriteConfiguration1 := &terraform.Options{
 		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
@@ -44,9 +43,8 @@ func TestExample1Complete(t *testing.T) {
 			"module.core_configuration_writer",
 		},
 	}
-	defer terraform.Destroy(t, terraformWriteConfiguration)
-	terraform.InitAndApply(t, terraformWriteConfiguration)
-
+	terraform.InitAndApply(t, terraformWriteConfiguration1)
+		
 	// Read Configuration
 	terraformReadConfiguration := &terraform.Options{
 		TerraformDir: terraformDir,
@@ -56,7 +54,6 @@ func TestExample1Complete(t *testing.T) {
 			"module.core_configuration_reader",
 		},
 	}
-	defer terraform.Destroy(t, terraformReadConfiguration)
 	terraform.InitAndApply(t, terraformReadConfiguration)
 	
 	
