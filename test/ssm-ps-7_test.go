@@ -46,24 +46,16 @@ func TestExample7ListDict(t *testing.T) {
     terraform.InitAndApply(t, terraformWriteConfiguration)
         
     // Read Configuration
-    terraformReadConfiguration := &terraform.Options{
-        TerraformDir: terraformDir,
-        NoColor:      false,
-        Lock:         true,
-        Targets: 	  []string {
-            "module.core_configuration_reader",
-        },
-    }
-    terraform.InitAndApply(t, terraformReadConfiguration)
-    
+    terraform.InitAndApply(t, terraformCore)
+
     // Retrieve the 'test_success' output
-    testSuccessOutput := terraform.Output(t, terraformReadConfiguration, "test_success")
-    
+    testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
+
     // Retrieve the 'dict_list_test' output
-    dictListOutput := terraform.Output(t, terraformReadConfiguration, "dict_list_test")
-    
+    dictListOutput := terraform.Output(t, terraformCore, "dict_list_test")
+
     // Retrieve the 'mixed_structure_test' output
-    mixedStructureOutput := terraform.Output(t, terraformReadConfiguration, "mixed_structure_test")
+    mixedStructureOutput := terraform.Output(t, terraformCore, "mixed_structure_test")
 
     // Assert that 'test_success' equals "true"
     assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
