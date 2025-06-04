@@ -1,14 +1,10 @@
 output "test_success" {
-  description = "Indicates if the test was successful"
-  value       = can(module.core_configuration_reader.configuration_output) ? "true" : "false"
+  description = "Are local.configuration_add_on similar to the read configuration?"
+  value       = local.configuration_add_on == module.core_configuration_reader.unflattened_configuration
+
 }
 
-output "configuration_output" {
-  description = "The configuration that was read back"
-  value       = try(module.core_configuration_reader.configuration_output, {})
-}
-
-output "string_list_test" {
-  description = "Test string list handling"
-  value       = can(lookup(module.core_configuration_reader.configuration_output, "string_list", [])) ? "true" : "false"
+output "core_configuration_reader" {
+  description = "Read configuration?"
+  value       = module.core_configuration_reader.unflattened_configuration
 }

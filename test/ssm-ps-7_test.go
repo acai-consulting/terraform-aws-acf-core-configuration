@@ -48,21 +48,9 @@ func TestExample7ListDict(t *testing.T) {
     // Read Configuration
     terraform.InitAndApply(t, terraformCore)
 
-    // Retrieve the 'test_success' output
-    testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
+	// Retrieve the 'test_success' output
+	testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
 
-    // Retrieve the 'dict_list_test' output
-    dictListOutput := terraform.Output(t, terraformCore, "dict_list_test")
-
-    // Retrieve the 'mixed_structure_test' output
-    mixedStructureOutput := terraform.Output(t, terraformCore, "mixed_structure_test")
-
-    // Assert that 'test_success' equals "true"
-    assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
-    
-    // Assert that dict list test passes
-    assert.Equal(t, "true", dictListOutput, "The dict_list_test output is not true")
-    
-    // Assert that mixed structure test passes
-    assert.Equal(t, "true", mixedStructureOutput, "The mixed_structure_test output is not true")
+	// Assert that 'test_success' equals "true"
+	assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
 }

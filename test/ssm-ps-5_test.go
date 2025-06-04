@@ -48,15 +48,9 @@ func TestExample5ComplexMixed(t *testing.T) {
     // Read Configuration
     terraform.InitAndApply(t, terraformCore)
 
-    // Retrieve the 'test_success' output
-    testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
-    
-    // Retrieve the 'complex_structure_test' output
-    complexStructureOutput := terraform.Output(t, terraformCore, "complex_structure_test")
+	// Retrieve the 'test_success' output
+	testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
 
-    // Assert that 'test_success' equals "true"
-    assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
-    
-    // Assert that complex structure test passes
-    assert.Equal(t, "true", complexStructureOutput, "The complex_structure_test output is not true")
+	// Assert that 'test_success' equals "true"
+	assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
 }

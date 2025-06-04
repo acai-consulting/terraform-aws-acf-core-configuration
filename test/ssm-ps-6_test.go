@@ -48,15 +48,9 @@ func TestExample6ListString(t *testing.T) {
     // Read Configuration
     terraform.InitAndApply(t, terraformCore)
     
-    // Retrieve the 'test_success' output
-    testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
+	// Retrieve the 'test_success' output
+	testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
 
-    // Retrieve the 'string_list_test' output
-    stringListOutput := terraform.Output(t, terraformCore, "string_list_test")
-
-    // Assert that 'test_success' equals "true"
-    assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
-    
-    // Assert that string list test passes
-    assert.Equal(t, "true", stringListOutput, "The string_list_test output is not true")
+	// Assert that 'test_success' equals "true"
+	assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
 }
