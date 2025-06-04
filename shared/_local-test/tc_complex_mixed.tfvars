@@ -7,18 +7,18 @@ configuration_add_on = {
         port = "5432"
         settings = {
           max_connections = "100"
-          timeout = "30"
+          timeout         = "30"
         }
         tags = ["production", "primary"]
       },
       {
         name = "secondary"
-        host = "db2.example.com" 
+        host = "db2.example.com"
         port = "5432"
         settings = {
           max_connections = "50"
-          timeout = "15"
-          backup_enabled = "true"
+          timeout         = "15"
+          backup_enabled  = "true"
         }
         tags = ["production", "backup"]
       }
@@ -28,18 +28,18 @@ configuration_add_on = {
     services = ["api", "worker", "scheduler"]
     environments = [
       {
-        name = "prod"
+        name     = "prod"
         replicas = "3"
         resources = {
-          cpu = "2"
+          cpu    = "2"
           memory = "4Gi"
         }
       },
       {
-        name = "staging"
+        name     = "staging"
         replicas = "1"
         resources = {
-          cpu = "1"
+          cpu    = "1"
           memory = "2Gi"
         }
       }
