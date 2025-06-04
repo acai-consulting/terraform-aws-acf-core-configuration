@@ -10,10 +10,19 @@ func TestExample1Complete(t *testing.T) {
 	// retryable errors in terraform testing.
 	t.Log("Starting Sample Module test")
 
+    terraformDir := "../examples/ssm-ps-1"
+
+    // Clean up backend override file after test
+    defer func() {
+        // Also clean up local state files
+        os.Remove(filepath.Join(terraformDir, "terraform.tfstate"))
+        os.Remove(filepath.Join(terraformDir, "terraform.tfstate.backup"))
+        os.RemoveAll(filepath.Join(terraformDir, ".terraform"))
+    }()
 
 	// Create IAM Roles
 	terraformCoreConfigurationRoles := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-1",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -25,7 +34,7 @@ func TestExample1Complete(t *testing.T) {
 
 	// Write Configuration
 	terraformWriteConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-1",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
@@ -38,7 +47,7 @@ func TestExample1Complete(t *testing.T) {
 
 	// Read Configuration
 	terraformReadConfiguration := &terraform.Options{
-		TerraformDir: "../examples/ssm-ps-1",
+		TerraformDir: terraformDir,
 		NoColor:      false,
 		Lock:         true,
 		Targets: 	  []string {
