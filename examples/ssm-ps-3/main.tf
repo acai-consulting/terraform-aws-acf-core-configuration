@@ -103,7 +103,7 @@ locals {
     addon2_l1_e2_item = "value addon2_l1_e3_item"
   }
 
-  parameter_name_prefix = "/test"
+  parameter_name_prefix = "/test3"
 
 }
 

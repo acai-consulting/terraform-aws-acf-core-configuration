@@ -87,7 +87,7 @@ locals {
     }
   }
 
-  parameter_name_prefix = "/test"
+  parameter_name_prefix = "/test7"
 
 }
 
