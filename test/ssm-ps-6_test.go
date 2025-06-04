@@ -12,6 +12,16 @@ func TestExample6ListString(t *testing.T) {
 
     terraformDir := "../examples/ssm-ps-6"
 
+    terraformCore := &terraform.Options{
+        TerraformDir: terraformDir,
+        NoColor:      false,
+        Lock:         true,
+    }
+    defer func() {
+        terraform.Destroy(t, terraformCore)
+        terraform.Show(t, terraformCore)
+    }()
+
     // Create IAM Roles
     terraformCoreConfigurationRoles := &terraform.Options{
         TerraformDir: terraformDir,
@@ -21,7 +31,6 @@ func TestExample6ListString(t *testing.T) {
             "module.core_configuration_roles", 
         },
     }
-    defer terraform.Destroy(t, terraformCoreConfigurationRoles)
     terraform.InitAndApply(t, terraformCoreConfigurationRoles)
 
     // Write Configuration
@@ -34,7 +43,6 @@ func TestExample6ListString(t *testing.T) {
             "module.core_configuration_writer",
         },
     }
-    defer terraform.Destroy(t, terraformWriteConfiguration)
     terraform.InitAndApply(t, terraformWriteConfiguration)
         
     // Read Configuration
@@ -46,7 +54,6 @@ func TestExample6ListString(t *testing.T) {
             "module.core_configuration_reader",
         },
     }
-    defer terraform.Destroy(t, terraformReadConfiguration)
     terraform.InitAndApply(t, terraformReadConfiguration)
     
     // Retrieve the 'test_success' output
