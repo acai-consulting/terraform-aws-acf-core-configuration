@@ -53,57 +53,22 @@ data "aws_caller_identity" "current" {}
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   configuration_add_on = {
-    l1_e1_item = "value l1_e1_item"
-    l1_e2_item = "value l1_e3_item"
-    l1_e3_node = {
-      l1_e3_l2_e1_item = "value l1_e3_l2_e1_item"
-      l1_e3_l2_e2_node = {
-        l1_e3_l2_e2_l3_e1_item = "value l1_e3_l2_e2_l3_e1_item"
-        l1_e3_l2_e2_l3_e2_item = "value l1_e3_l2_e2_l3_e2_item"
-        l1_e3_l2_e2_l3_e3_node = {
-          l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-          l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-          l1_e3_l2_e2_l3_e3_node = {
-            l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-            l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-            l1_e3_l2_e2_l3_e3_node = {
-              l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-              l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-              l1_e3_l2_e2_l3_e3_node = {
-                l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                l1_e3_l2_e2_l3_e3_node = {
-                  l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                  l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                }
-              }
-            }
-          }
-        }
-      }
+    simple_string = "test_value"
+    string_list = [
+      "item1",
+      "item2",
+      "item3"
+    ]
+    nested_object = {
+      name = "test_nested"
+      tags = [
+        "tag1",
+        "tag2"
+      ]
     }
-  }
-  configuration_add_on1 = {
-    addon1_l1_e1_item = "value addon1_l1_e1_item"
-    addon1_l1_e2_item = "value addon1_l1_e3_item"
-    addon1_l1_e3_node = {
-      addon1_l1_e3_l2_e1_item = "value addon1_l1_e3_l2_e1_item"
-      addon1_l1_e3_l2_e2_node = {
-        addon1_l1_e3_l2_e2_l3_e1_item = "value addon1_l1_e3_l2_e2_l3_e1_item"
-        addon1_l1_e3_l2_e2_l3_e2_item = "value addon1_l1_e3_l2_e2_l3_e2_item"
-        addon1_l1_e3_l2_e2_l3_e3_node = {
-          addon1_l1_e3_l2_e2_l3_e3_l4_e1_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e1_item"
-          addon1_l1_e3_l2_e2_l3_e3_l4_e2_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e2_item"
-        }
-      }
-    }
-  }
-  configuration_add_on2 = {
-    addon2_l1_e1_item = "value addon2_l1_e1_item"
-    addon2_l1_e2_item = "value addon2_l1_e3_item"
   }
 
-  parameter_name_prefix = "/test3"
+  parameter_name_prefix = "/test6"
 
 }
 
@@ -136,11 +101,7 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
-  configuration_add_on = local.configuration_add_on
-  configuration_add_on_list = [
-    local.configuration_add_on1,
-    local.configuration_add_on2
-  ]
+  configuration_add_on  = local.configuration_add_on
   parameter_overwrite   = true
   parameter_name_prefix = local.parameter_name_prefix
   providers = {

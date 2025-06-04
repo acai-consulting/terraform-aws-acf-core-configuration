@@ -53,57 +53,55 @@ data "aws_caller_identity" "current" {}
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   configuration_add_on = {
-    l1_e1_item = "value l1_e1_item"
-    l1_e2_item = "value l1_e3_item"
-    l1_e3_node = {
-      l1_e3_l2_e1_item = "value l1_e3_l2_e1_item"
-      l1_e3_l2_e2_node = {
-        l1_e3_l2_e2_l3_e1_item = "value l1_e3_l2_e2_l3_e1_item"
-        l1_e3_l2_e2_l3_e2_item = "value l1_e3_l2_e2_l3_e2_item"
-        l1_e3_l2_e2_l3_e3_node = {
-          l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-          l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-          l1_e3_l2_e2_l3_e3_node = {
-            l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-            l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-            l1_e3_l2_e2_l3_e3_node = {
-              l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-              l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-              l1_e3_l2_e2_l3_e3_node = {
-                l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                l1_e3_l2_e2_l3_e3_node = {
-                  l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                  l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                }
-              }
-            }
+    database = {
+      connections = [
+        {
+          name = "primary"
+          host = "db1.example.com"
+          port = "5432"
+          settings = {
+            max_connections = "100"
+            timeout         = "30"
+          }
+          tags = ["production", "primary"]
+        },
+        {
+          name = "secondary"
+          host = "db2.example.com"
+          port = "5432"
+          settings = {
+            max_connections = "50"
+            timeout         = "15"
+            backup_enabled  = "true"
+          }
+          tags = ["production", "backup"]
+        }
+      ]
+    }
+    application = {
+      services = ["api", "worker", "scheduler"]
+      environments = [
+        {
+          name     = "prod"
+          replicas = "3"
+          resources = {
+            cpu    = "2"
+            memory = "4Gi"
+          }
+        },
+        {
+          name     = "staging"
+          replicas = "1"
+          resources = {
+            cpu    = "1"
+            memory = "2Gi"
           }
         }
-      }
+      ]
     }
-  }
-  configuration_add_on1 = {
-    addon1_l1_e1_item = "value addon1_l1_e1_item"
-    addon1_l1_e2_item = "value addon1_l1_e3_item"
-    addon1_l1_e3_node = {
-      addon1_l1_e3_l2_e1_item = "value addon1_l1_e3_l2_e1_item"
-      addon1_l1_e3_l2_e2_node = {
-        addon1_l1_e3_l2_e2_l3_e1_item = "value addon1_l1_e3_l2_e2_l3_e1_item"
-        addon1_l1_e3_l2_e2_l3_e2_item = "value addon1_l1_e3_l2_e2_l3_e2_item"
-        addon1_l1_e3_l2_e2_l3_e3_node = {
-          addon1_l1_e3_l2_e2_l3_e3_l4_e1_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e1_item"
-          addon1_l1_e3_l2_e2_l3_e3_l4_e2_item = "value addon1_l1_e3_l2_e2_l3_e3_l4_e2_item"
-        }
-      }
-    }
-  }
-  configuration_add_on2 = {
-    addon2_l1_e1_item = "value addon2_l1_e1_item"
-    addon2_l1_e2_item = "value addon2_l1_e3_item"
   }
 
-  parameter_name_prefix = "/test3"
+  parameter_name_prefix = "/test5"
 
 }
 
@@ -136,11 +134,7 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
-  configuration_add_on = local.configuration_add_on
-  configuration_add_on_list = [
-    local.configuration_add_on1,
-    local.configuration_add_on2
-  ]
+  configuration_add_on  = local.configuration_add_on
   parameter_overwrite   = true
   parameter_name_prefix = local.parameter_name_prefix
   providers = {

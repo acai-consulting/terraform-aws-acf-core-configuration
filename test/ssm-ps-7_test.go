@@ -6,11 +6,11 @@ import (
     "github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample1Complete(t *testing.T) {
+func TestExample7ListDict(t *testing.T) {
     // retryable errors in terraform testing.
-    t.Log("Starting Sample Module test")
+    t.Log("Starting List of Dictionaries Module test")
 
-    terraformDir := "../examples/ssm-ps-1"
+    terraformDir := "../examples/ssm-ps-7"
 
     terraformCore := &terraform.Options{
         TerraformDir: terraformDir,
@@ -44,21 +44,13 @@ func TestExample1Complete(t *testing.T) {
         },
     }
     terraform.InitAndApply(t, terraformWriteConfiguration)
-
+        
     // Read Configuration
-    terraformReadConfiguration := &terraform.Options{
-        TerraformDir: terraformDir,
-        NoColor:      false,
-        Lock:         true,
-        Targets: 	  []string {
-            "module.core_configuration_reader",
-        },
-    }
-    terraform.InitAndApply(t, terraformReadConfiguration)
-    
-    // Retrieve the 'test_success' output
-    testSuccessOutput := terraform.Output(t, terraformReadConfiguration, "test_success")
+    terraform.InitAndApply(t, terraformCore)
 
-    // Assert that 'test_success' equals "true"
-    assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
+	// Retrieve the 'test_success' output
+	testSuccessOutput := terraform.Output(t, terraformCore, "test_success")
+
+	// Assert that 'test_success' equals "true"
+	assert.Equal(t, "true", testSuccessOutput, "The test_success output is not true")
 }
