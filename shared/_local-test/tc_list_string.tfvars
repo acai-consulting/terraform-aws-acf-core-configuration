@@ -2,7 +2,7 @@ configuration_add_on = {
   simple_string = "test_value"
   string_list = [
     "item1",
-    "item2", 
+    "item2",
     "item3"
   ]
   nested_object = {
