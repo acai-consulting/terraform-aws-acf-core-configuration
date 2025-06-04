@@ -1,6 +1,8 @@
 package test
 
 import (
+    "os"
+    "path/filepath"	
 	"testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/gruntwork-io/terratest/modules/terraform"
