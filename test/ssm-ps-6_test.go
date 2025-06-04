@@ -27,7 +27,6 @@ func TestExample6ListString(t *testing.T) {
         TerraformDir: "../examples/ssm-ps-6",
         NoColor:      false,
         Lock:         true,
-        VarFiles:     []string{"../../../shared/_local-test/tc_list_string.tfvars"},
         Targets: 	  []string {
             "module.core_configuration_writer.module.complex_map_to_simple_map",
             "module.core_configuration_writer",
@@ -41,7 +40,6 @@ func TestExample6ListString(t *testing.T) {
         TerraformDir: "../examples/ssm-ps-6",
         NoColor:      false,
         Lock:         true,
-        VarFiles:     []string{"../../../shared/_local-test/tc_list_string.tfvars"},
         Targets: 	  []string {
             "module.core_configuration_reader",
         },
