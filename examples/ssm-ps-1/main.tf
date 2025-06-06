@@ -54,11 +54,11 @@ data "aws_caller_identity" "current" {}
 locals {
   configuration_add_on = {
     api = {
-      auth_url     = "https://auth.example.com/oauth/token?grant_type=client_credentials&scope=read write"
-      webhook_url  = "https://api.example.com/webhook?secret=abc123&format=json"
-      graphql_url  = "https://api.example.com/graphql?query={user{id name email}}"
+      auth_url    = "https://auth.example.com/oauth/token?grant_type=client_credentials&scope=read write"
+      webhook_url = "https://api.example.com/webhook?secret=abc123&format=json"
+      graphql_url = "https://api.example.com/graphql?query={user{id name email}}"
     }
-    
+
     # Database connection strings
     database = {
       postgres = "postgresql://user:p@ssw0rd@localhost:5432/mydb?sslmode=require"
