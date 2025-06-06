@@ -53,8 +53,20 @@ data "aws_caller_identity" "current" {}
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
   configuration_add_on = {
+    api = {
+      auth_url     = "https://auth.example.com/oauth/token?grant_type=client_credentials&scope=read write"
+      webhook_url  = "https://api.example.com/webhook?secret=abc123&format=json"
+      graphql_url  = "https://api.example.com/graphql?query={user{id name email}}"
+    }
+    
+    # Database connection strings
+    database = {
+      postgres = "postgresql://user:p@ssw0rd@localhost:5432/mydb?sslmode=require"
+      mysql    = "mysql://user:password@localhost:3306/database?charset=utf8mb4"
+      redis    = "redis://:password@redis.example.com:6379/0"
+    }
     l1_e1_item = "value l1_e1_item"
-    l1_e2_item = "value l1_e3_item"
+    l1_e2_item = "value l1_e2_item"
     l1_e3_node = {
       l1_e3_l2_e1_item = "value l1_e3_l2_e1_item"
       l1_e3_l2_e2_node = {
