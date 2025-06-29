@@ -90,8 +90,8 @@ locals {
 module "core_configuration_roles" {
   source = "../../ssm-ps/iam-roles"
 
-  trusted_account_ids           = [data.aws_caller_identity.current.account_id]
-  parameter_name_prefix         = local.parameter_name_prefix
+  trusted_account_ids   = [data.aws_caller_identity.current.account_id]
+  parameter_name_prefix = local.parameter_name_prefix
   iam_roles = {
     configuration_reader_role_name = "test-reader"
     configuration_writer_role_name = "test-writer"
