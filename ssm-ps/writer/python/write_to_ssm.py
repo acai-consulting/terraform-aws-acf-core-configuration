@@ -2,6 +2,7 @@ import argparse
 import json
 import boto3
 from botocore.config import Config
+from botocore.exceptions import ClientError
 
 def assume_role(role_arn):
     sts = boto3.client('sts')
@@ -12,6 +13,15 @@ def assume_role(role_arn):
         aws_secret_access_key=creds['SecretAccessKey'],
         aws_session_token=creds['SessionToken'],
     )
+
+def parameter_exists(ssm, name):
+    try:
+        ssm.get_parameter(Name=name)
+        return True
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'ParameterNotFound':
+            return False
+        raise
 
 def main():
     parser = argparse.ArgumentParser()
@@ -36,19 +46,34 @@ def main():
     overwrite = args.parameter_overwrite.lower() == "true"
 
     for k, v in param_map.items():
+        exists = parameter_exists(ssm, k)
         kwargs = {
             'Name': k,
             'Value': v,
             'Type': 'SecureString' if args.kms_key_id else 'String',
-            'Overwrite': overwrite
         }
         if args.kms_key_id:
             kwargs['KeyId'] = args.kms_key_id
-        if tags:
-            kwargs['Tags'] = tags
+
         try:
-            ssm.put_parameter(**kwargs)
-            print(f"Stored {k} with tags {tags}")
+            if not exists:
+                # Parameter existiert nicht: mit Tags anlegen
+                kwargs['Tags'] = tags
+                kwargs['Overwrite'] = False
+                ssm.put_parameter(**kwargs)
+                print(f"Created {k} with tags {tags}")
+            else:
+                # Parameter existiert: Wert überschreiben, Tags separat setzen
+                kwargs['Overwrite'] = overwrite
+                ssm.put_parameter(**kwargs)
+                print(f"Updated {k} value")
+                if tags:
+                    ssm.add_tags_to_resource(
+                        ResourceType='Parameter',
+                        ResourceId=k,
+                        Tags=tags
+                    )
+                    print(f"Updated tags for {k}: {tags}")
         except Exception as e:
             print(f"Error storing {k}: {e}")
 
