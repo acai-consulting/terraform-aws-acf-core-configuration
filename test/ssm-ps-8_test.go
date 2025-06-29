@@ -6,9 +6,9 @@ import (
     "github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestExample8ListDict(t *testing.T) {
+func TestExample8(t *testing.T) {
     // retryable errors in terraform testing.
-    t.Log("Starting List of Dictionaries Module test")
+    t.Log("Starting \"Invalid for_each argument\" test")
 
     terraformDir := "../examples/ssm-ps-8"
 

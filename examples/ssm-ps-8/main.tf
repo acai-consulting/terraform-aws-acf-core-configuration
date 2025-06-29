@@ -103,7 +103,7 @@ provider "aws" {
 }
 
 module "core_configuration_writer" {
-  source = "../../ssm-ps/writer"
+  source = "../../ssm-ps/writer_new"
 
   configuration_add_on  = local.configuration_add_on
   parameter_overwrite   = true
