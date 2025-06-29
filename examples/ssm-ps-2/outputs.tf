@@ -7,6 +7,6 @@ output "test_success" {
 }
 
 output "core_configuration_reader" {
-  description = "Read configuration?"
+  description = "Read configuration"
   value       = module.core_configuration_reader.unflattened_configuration
 }

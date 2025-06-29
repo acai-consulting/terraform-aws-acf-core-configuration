@@ -3,13 +3,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
 provider "aws" {
   region = "eu-central-1"
-  # please use the target role you need.
-  # create additional providers in case your module provisions to multiple core accounts.
   assume_role {
-    role_arn = "arn:aws:iam::471112796356:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Org-Mgmt Account
-    #role_arn = "arn:aws:iam::590183833356:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Core Logging Account
-    #role_arn = "arn:aws:iam::992382728088:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Core Security Account
-    #role_arn = "arn:aws:iam::767398146370:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Workload Account
+    role_arn = "arn:aws:iam::471112796356:role/OrganizationAccountAccessRole"
   }
 }
 
@@ -47,47 +42,31 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 data "aws_caller_identity" "current" {}
 
-
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ LOCALS
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  configuration_add_on = {
-    simple_string = "test_value"
-    dict_list = [
-      {
-        name    = "dict1"
-        value   = "value1"
-        enabled = "true"
-      },
-      {
-        name    = "dict2"
-        value   = "value2"
-        enabled = "false"
-        nested = {
-          sub_key = "sub_value"
-        }
-      }
-    ]
-    mixed_structure = {
-      items = [
-        {
-          id   = "item1"
-          tags = ["production", "critical"]
-        },
-        {
-          id   = "item2"
-          tags = ["development"]
-          config = {
-            timeout = "30"
-            retry   = "true"
-          }
-        }
-      ]
-    }
-  }
-  parameter_name_prefix = "/test7"
+  parameter_name_prefix = "/test8"
 }
+
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ PROBE
+# ---------------------------------------------------------------------------------------------------------------------
+resource "aws_iam_role" "example" {
+  name = "example-iam-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ MODULES
@@ -103,6 +82,14 @@ module "core_configuration_roles" {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ LOCALS
+# ---------------------------------------------------------------------------------------------------------------------
+locals {
+  configuration_add_on = {
+    iam_role_arn = aws_iam_role.example.arn
+  }
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ CORE CONFIGURATION - WRITER
@@ -152,4 +139,3 @@ module "core_configuration_reader" {
     module.core_configuration_writer
   ]
 }
-
