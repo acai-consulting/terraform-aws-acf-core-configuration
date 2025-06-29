@@ -90,7 +90,6 @@ locals {
 module "core_configuration_roles" {
   source = "../../ssm-ps/iam-roles"
 
-  configuration_writer_role_arn = module.core_configuration_roles.configuration_writer_role_arn
   trusted_account_ids           = [data.aws_caller_identity.current.account_id]
   parameter_name_prefix         = local.parameter_name_prefix
   iam_roles = {
@@ -114,6 +113,7 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
+  configuration_writer_role_arn = module.core_configuration_roles.configuration_writer_role_arn
   configuration_add_on_list = [
     local.configuration_add_on
   ]
