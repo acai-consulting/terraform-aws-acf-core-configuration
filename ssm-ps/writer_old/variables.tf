@@ -1,8 +1,3 @@
-variable "configuration_writer_role_arn" {
-  description = "ARN of the IAM role used for writing configuration."
-  type        = string
-}
-
 variable "configuration_add_on" {
   description = "Complex map of configuration add-on."
   type        = any

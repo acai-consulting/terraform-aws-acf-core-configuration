@@ -118,9 +118,10 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
-  configuration_add_on  = local.configuration_add_on
-  parameter_overwrite   = true
-  parameter_name_prefix = local.parameter_name_prefix
+  configuration_writer_role_arn = module.core_configuration_roles.configuration_writer_role_arn
+  configuration_add_on          = local.configuration_add_on
+  parameter_overwrite           = true
+  parameter_name_prefix         = local.parameter_name_prefix
   providers = {
     aws.configuration_writer = aws.core_configuration_writer
   }
