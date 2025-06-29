@@ -64,7 +64,7 @@ resource "null_resource" "write_flattened_map_to_ssm" {
 python3 write_to_ssm.py \
   --map '${jsonencode(local.flattened_configuration_add_on)}' \
   --role-arn '${var.configuration_writer_role_arn}' \
-  %{ if var.kms_key_arn != null }--kms-key-id "${var.kms_key_arn}"%{ endif } \
+  %{if var.kms_key_arn != null}--kms-key-id "${var.kms_key_arn}"%{endif} \
   --tags '${jsonencode(local.resource_tags)}'
   --parameter_overwrite '${var.parameter_overwrite}'
 EOT
