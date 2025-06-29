@@ -3,13 +3,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
 provider "aws" {
   region = "eu-central-1"
-  # please use the target role you need.
-  # create additional providers in case your module provisions to multiple core accounts.
   assume_role {
-    role_arn = "arn:aws:iam::471112796356:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Org-Mgmt Account
-    #role_arn = "arn:aws:iam::590183833356:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Core Logging Account
-    #role_arn = "arn:aws:iam::992382728088:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Core Security Account
-    #role_arn = "arn:aws:iam::767398146370:role/OrganizationAccountAccessRole" // ACAI AWS Testbed Workload Account
+    role_arn = "arn:aws:iam::471112796356:role/OrganizationAccountAccessRole"
   }
 }
 
@@ -47,56 +42,31 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 data "aws_caller_identity" "current" {}
 
-
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ LOCALS
 # ---------------------------------------------------------------------------------------------------------------------
 locals {
-  configuration_add_on = {
-    api = {
-      auth_url    = "https://auth.example.com/oauth/token?grant_type=client_credentials&scope=read write"
-      webhook_url = "https://api.example.com/webhook?secret=abc123&format=json"
-      graphql_url = "https://api.example.com/graphql?query={user{id name email}}"
-    }
-
-    # Database connection strings
-    database = {
-      postgres = "postgresql://user:p@ssw0rd@localhost:5432/mydb?sslmode=require"
-      mysql    = "mysql://user:password@localhost:3306/database?charset=utf8mb4"
-      redis    = "redis://:password@redis.example.com:6379/0"
-    }
-    l1_e1_item = "value l1_e1_item"
-    l1_e2_item = "value l1_e2_item"
-    l1_e3_node = {
-      l1_e3_l2_e1_item = "value l1_e3_l2_e1_item"
-      l1_e3_l2_e2_node = {
-        l1_e3_l2_e2_l3_e1_item = "value l1_e3_l2_e2_l3_e1_item"
-        l1_e3_l2_e2_l3_e2_item = "value l1_e3_l2_e2_l3_e2_item"
-        l1_e3_l2_e2_l3_e3_node = {
-          l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-          l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-          l1_e3_l2_e2_l3_e3_node = {
-            l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-            l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-            l1_e3_l2_e2_l3_e3_node = {
-              l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-              l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-              l1_e3_l2_e2_l3_e3_node = {
-                l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                l1_e3_l2_e2_l3_e3_node = {
-                  l1_e3_l2_e2_l3_e3_l4_e1_item = "value l1_e3_l2_e2_l3_e3_l4_e1_item"
-                  l1_e3_l2_e2_l3_e3_l4_e2_item = "value l1_e3_l2_e2_l3_e3_l4_e2_item"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  parameter_name_prefix = "/test1"
+  parameter_name_prefix = "/test8"
 }
+
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ PROBE
+# ---------------------------------------------------------------------------------------------------------------------
+resource "aws_iam_role" "example" {
+  name = "example-iam-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "ec2.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+}
+
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ MODULES
@@ -112,6 +82,14 @@ module "core_configuration_roles" {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# ¦ LOCALS
+# ---------------------------------------------------------------------------------------------------------------------
+locals {
+  configuration_add_on = {
+    iam_role_arn = aws_iam_role.example.arn
+  }
+}
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ CORE CONFIGURATION - WRITER
@@ -131,9 +109,6 @@ module "core_configuration_writer" {
   configuration_add_on          = local.configuration_add_on
   parameter_overwrite           = true
   parameter_name_prefix         = local.parameter_name_prefix
-  providers = {
-    aws.configuration_writer = aws.core_configuration_writer
-  }
   depends_on = [
     module.core_configuration_roles
   ]
@@ -162,4 +137,3 @@ module "core_configuration_reader" {
     module.core_configuration_writer
   ]
 }
-

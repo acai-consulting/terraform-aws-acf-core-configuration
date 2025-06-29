@@ -136,7 +136,8 @@ provider "aws" {
 module "core_configuration_writer" {
   source = "../../ssm-ps/writer"
 
-  configuration_add_on = local.configuration_add_on
+  configuration_writer_role_arn = module.core_configuration_roles.configuration_writer_role_arn
+  configuration_add_on          = local.configuration_add_on
   configuration_add_on_list = [
     local.configuration_add_on1,
     local.configuration_add_on2

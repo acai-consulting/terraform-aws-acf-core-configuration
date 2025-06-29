@@ -3,14 +3,17 @@
 # ---------------------------------------------------------------------------------------------------------------------
 terraform {
   required_version = ">= 1.3.10"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 5.0"
+      configuration_aliases = [
+        aws.configuration_writer
+      ]
+    }
+  }
 }
-
-
-# ---------------------------------------------------------------------------------------------------------------------
-# ¦ DATA
-# ---------------------------------------------------------------------------------------------------------------------
-data "aws_region" "current" {}
-
 
 # ---------------------------------------------------------------------------------------------------------------------
 # ¦ LOCALS
@@ -58,18 +61,38 @@ locals {
 # ¦ STORE CONFIGURATION
 # ---------------------------------------------------------------------------------------------------------------------
 # Resource to use when NOT overwriting parameters (ignore changes)
-resource "null_resource" "write_flattened_map_to_ssm" {
-  provisioner "local-exec" {
-    command = <<EOT
-python3 ${path.module}/python/write_to_ssm.py \
-  --map '${jsonencode(local.flattened_configuration_add_on)}' \
-  --role-arn '${var.configuration_writer_role_arn}' \
-  %{if var.kms_key_arn != null}--kms-key-id "${var.kms_key_arn}"%{endif} \
-  --tags '${jsonencode(local.resource_tags)}' \
-  --parameter_overwrite '${var.parameter_overwrite}'
-EOT
-    environment = {
-      AWS_DEFAULT_REGION = data.aws_region.current.name
-    }
+resource "aws_ssm_parameter" "ssm_parameters_ignore" {
+  for_each = var.parameter_overwrite ? {} : local.flattened_configuration_add_on
+
+  name = each.key
+  type = var.kms_key_arn == null ? "String" : "SecureString"
+  # in case of encryption: 
+  # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
+  # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
+  value    = each.value
+  tags     = local.resource_tags
+  key_id   = var.kms_key_arn
+  provider = aws.configuration_writer
+
+  lifecycle {
+    ignore_changes = [value, tags]
   }
+  depends_on = [module.complex_map_to_simple_map]
+}
+
+# Resource to use when overwriting parameters (do not ignore changes)
+resource "aws_ssm_parameter" "ssm_parameters_overwrite" {
+  for_each = var.parameter_overwrite ? local.flattened_configuration_add_on : {}
+
+  name = each.key
+  type = var.kms_key_arn == null ? "String" : "SecureString"
+  # in case of encryption: 
+  # The unencrypted value of a SecureString will be stored in the raw state as plain-text. 
+  # Read more about sensitive data in state: https://developer.hashicorp.com/terraform/language/state/sensitive-data
+  value      = each.value
+  tags       = local.resource_tags
+  key_id     = var.kms_key_arn
+  overwrite  = true # currently seems to default to false. Will be removed after terraform aws 6.x
+  provider   = aws.configuration_writer
+  depends_on = [module.complex_map_to_simple_map]
 }
